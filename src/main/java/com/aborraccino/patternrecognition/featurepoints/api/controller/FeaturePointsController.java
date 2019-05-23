@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aborraccino.patternrecognition.featurepoints.api.service.FeaturePointsService;
 import com.aborraccino.patternrecognition.featurepoints.dto.LineDTO;
 import com.aborraccino.patternrecognition.featurepoints.dto.PointDTO;
+import com.aborraccino.patternrecognition.featurepoints.service.FeaturePointsService;
 
 @RestController
 @RequestMapping("/feature-points/api/v1")

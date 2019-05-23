@@ -1,4 +1,4 @@
-package com.aborraccino.patternrecognition.featurepoints.api.service.impl;
+package com.aborraccino.patternrecognition.featurepoints.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,13 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.aborraccino.patternrecognition.featurepoints.api.service.FeaturePointsService;
 import com.aborraccino.patternrecognition.featurepoints.dto.LineDTO;
 import com.aborraccino.patternrecognition.featurepoints.dto.PointDTO;
 import com.aborraccino.patternrecognition.featurepoints.exception.InvalidInputException;
 import com.aborraccino.patternrecognition.featurepoints.model.Line;
 import com.aborraccino.patternrecognition.featurepoints.model.Plane;
 import com.aborraccino.patternrecognition.featurepoints.model.Point;
+import com.aborraccino.patternrecognition.featurepoints.service.FeaturePointsService;
 
 @Service
 public class FeaturePointsServiceImpl implements FeaturePointsService {
@@ -49,7 +49,7 @@ public class FeaturePointsServiceImpl implements FeaturePointsService {
 		
 		if(n < 2) {
 			LOGGER.error("n must be greater than 1");
-			throw new InvalidInputException();
+			throw new InvalidInputException("1", "n must be greater than 1");
 		}
 		
 		// if no lines present, draw lines
@@ -92,11 +92,21 @@ public class FeaturePointsServiceImpl implements FeaturePointsService {
 		
 		LOGGER.info("lines are {}" , plane.getLines());
 		
-		return plane.getLines()
-				.stream()
+		return getLinesThatHaveAlmostNline(n);
+	}
+	
+	public void cleanSpace() { 
+		LOGGER.info("cleanSpace()");
+		
+		plane.clear();
+	}
+	
+	private List<LineDTO> getLinesThatHaveAlmostNline(int n){
+		
+		return plane.getLines().stream()
 				.filter(l -> l.getPoints().size() >= n)
 				.map(l -> {
-					
+			
 					Set<PointDTO> pointsDto = l.getPoints()
 							.stream()
 							.map(p -> new PointDTO(p.getX(), p.getY()))
@@ -109,12 +119,6 @@ public class FeaturePointsServiceImpl implements FeaturePointsService {
 				})
 				.collect(Collectors.toList());
 	}
-
-	public void cleanSpace() { 
-		LOGGER.info("cleanSpace()");
-		
-		plane.clear();
-	}
 	
 	private Line getLineThatContainsPoints(Point p1, Point p2) {
 		LOGGER.info("getLineThatContainsPoints {} {}" , p1, p2);
@@ -126,7 +130,7 @@ public class FeaturePointsServiceImpl implements FeaturePointsService {
                 .orElse(new Line());
     }
 	
-	public boolean isPointCollinearToLine(final Point p, final Line line) {
+	private boolean isPointCollinearToLine(final Point p, final Line line) {
 		LOGGER.info("isPointCollinearToLine point={} line={}" , p, line);
         final List<Point> linePoints = new ArrayList<>(line.getPoints());
         final Point p1 = linePoints.get(0);

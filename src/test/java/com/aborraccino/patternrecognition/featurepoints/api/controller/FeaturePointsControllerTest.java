@@ -22,9 +22,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.aborraccino.patternrecognition.featurepoints.api.service.FeaturePointsService;
 import com.aborraccino.patternrecognition.featurepoints.dto.LineDTO;
 import com.aborraccino.patternrecognition.featurepoints.dto.PointDTO;
+import com.aborraccino.patternrecognition.featurepoints.service.FeaturePointsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)

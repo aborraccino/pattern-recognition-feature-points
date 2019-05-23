@@ -1,4 +1,4 @@
-package com.aborraccino.patternrecognition.featurepoints.api.service;
+package com.aborraccino.patternrecognition.featurepoints.service;
 
 import java.util.List;
 import java.util.Set;
